@@ -44,9 +44,10 @@
 	</select>
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysMenu">
-		select m.*,(select p.name from sys_menu p where p.menu_id =
-		m.parent_id) as parentName
-		from sys_menu m order by m.order_num asc
+		select menu_id menuId, parent_id parentId,
+			   name name, type type, url url, perms perms,
+			   icon icon, order_num orderNum
+		from sys_menu m order by concat(parent_ids, menu_id)
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

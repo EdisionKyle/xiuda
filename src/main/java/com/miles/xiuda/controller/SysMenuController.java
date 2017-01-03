@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,6 @@ import com.miles.xiuda.handler.RTException;
 import com.miles.xiuda.pojo.Constants.MenuType;
 import com.miles.xiuda.pojo.SysMenu;
 import com.miles.xiuda.service.SysMenuService;
-import com.miles.xiuda.util.PageUtil;
 import com.miles.xiuda.util.Retmap;
 
 /**
@@ -40,19 +40,16 @@ public class SysMenuController extends AbstractController {
 	 * 所有菜单列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:menu:list")
-	public Retmap list(Integer page, Integer limit) {
+	public String list(Model model) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("offset", (page - 1) * limit);
-		map.put("limit", limit);
+		map.put("offset", 0);
+		map.put("limit", 30);
 
 		// 查询列表数据
 		List<SysMenu> menuList = sysMenuService.queryList(map);
-		int total = sysMenuService.queryTotal(map);
 
-		PageUtil pageUtil = new PageUtil(menuList, total, limit, page);
-
-		return Retmap.ok().put("page", pageUtil);
+		model.addAttribute("list", menuList);
+		return "menu/menu_list";
 	}
 
 	/**

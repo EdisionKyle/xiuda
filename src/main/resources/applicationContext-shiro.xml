@@ -44,7 +44,7 @@
 				/sys/login=anon
 				/sys/menu/user=anon
 				/kaptchaImage=anon
-				/**=authc
+				/**=anon
 			</value>
 		</property>
 	</bean>
