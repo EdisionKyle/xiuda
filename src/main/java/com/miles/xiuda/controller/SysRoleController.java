@@ -8,15 +8,16 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miles.xiuda.pojo.SysRole;
 import com.miles.xiuda.service.SysRoleMenuService;
 import com.miles.xiuda.service.SysRoleService;
-import com.miles.xiuda.util.PageUtil;
 import com.miles.xiuda.util.Retmap;
 
 /**
@@ -26,7 +27,7 @@ import com.miles.xiuda.util.Retmap;
  *  Copyright (C) 2017, tianpc0318@163.com All Rights Reserved.
  *  @author milesloner
  */
-@RestController
+@Controller
 @RequestMapping("/sys/role")
 public class SysRoleController extends AbstractController {
 
@@ -39,17 +40,25 @@ public class SysRoleController extends AbstractController {
 	 * 角色列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:role:list")
-	public Retmap list(Integer page, Integer limit) {
+	public String list(Integer page, Integer limit, Model model) {
+		page = 1;
+		limit = 10;
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		// 查询列表数据
 		List<SysRole> list = sysRoleService.queryList(map);
-		int total = sysRoleService.queryTotal(map);
-		PageUtil pageUtil = new PageUtil(list, total, limit, page);
-
-		return Retmap.ok().put("page", pageUtil);
+		model.addAttribute("list", list);
+		return "role/role_list";
+	}
+	
+	/**
+	 * 跳转到添加角色页面
+	 * @return
+	 */
+	@RequestMapping("/toAdd")
+	public String toAdd() {
+		return "role/role_add";
 	}
 
 	/**

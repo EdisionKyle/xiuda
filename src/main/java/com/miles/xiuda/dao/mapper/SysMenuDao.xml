@@ -45,12 +45,9 @@
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysMenu">
 		select menu_id menuId, parent_id parentId,
-			   name name, type type, url url, perms perms,
-			   icon icon, order_num orderNum
+			 name, type, url, perms,
+			 icon, order_num orderNum, available
 		from sys_menu m order by concat(parent_ids, menu_id)
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
 	</select>
 
 	<select id="queryTotal" resultType="int">

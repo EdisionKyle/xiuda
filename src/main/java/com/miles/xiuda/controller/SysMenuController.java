@@ -75,8 +75,8 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 角色授权菜单
 	 */
+	@ResponseBody
 	@RequestMapping("/perms")
-	@RequiresPermissions("sys:menu:perms")
 	public Retmap perms() {
 		// 查询列表数据
 		List<SysMenu> menuList = sysMenuService

@@ -33,6 +33,10 @@ public class SysRole implements Serializable {
 	private List<Long> menuIdList;
 	
 	/**
+	 * 状态
+	 */
+	private int available;
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;
@@ -99,6 +103,14 @@ public class SysRole implements Serializable {
 
 	public void setMenuIdList(List<Long> menuIdList) {
 		this.menuIdList = menuIdList;
+	}
+
+	public int getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(int available) {
+		this.available = available;
 	}
 	
 }

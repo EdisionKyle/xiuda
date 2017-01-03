@@ -26,6 +26,7 @@ table.treetable thead tr th {
 }
 
 table.treetable tbody tr td {
+  border: 1px solid #FFE1FF;
   cursor: default;
   padding: .3em 1em;
 }

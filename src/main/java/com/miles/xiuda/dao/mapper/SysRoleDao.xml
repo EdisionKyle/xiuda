@@ -9,7 +9,9 @@
 	</select>
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysRole">
-		select * from sys_role order by role_id asc
+		select role_id roleId, role_name roleName,
+			 remark, available, create_time createTime 
+		from sys_role order by role_id asc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

@@ -22,9 +22,13 @@
 		<link rel="stylesheet" type="text/css" href="lib/treetable/css/jquery.treetable.css" />
 		<link rel="stylesheet" type="text/css" href="lib/treetable/css/jquery.treetable.theme.default.css" />
 		<style type="text/css">
-			#menuTable th, #menuTable td {
+			#menuTable th {
 				font-size: 14px;
-				padding: 8px;
+				padding: 6px;
+			}
+			#menuTable td {
+				font-size: 14px;
+				padding: 5px 0px 5px 10px;
 			}
 			</style>
 		<title>菜单管理</title>
@@ -34,26 +38,44 @@
 		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 菜单列表
 		</nav>
 		<div class="page-container">
-			<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" data-title="添加目录" _href="article-add.html" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加目录</a></span></div>
-			<div class="mt-20">
+			<div class="cl pd-5 bg-1 bk-gray"> <span class="l"><a class="btn btn-primary radius" data-title="添加目录" onclick="catalog_add('添加目录', 'blank-add.html', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加目录</a></span></div>
+			<div class="mt-10">
 				<table id="menuTable" >
 					<thead>
 						<tr >
-							<th width="120">更新时间</th>
-							<th width="75">浏览次数</th>
-							<th width="60">发布状态</th>
-							<th width="120">操作</th>
+							<th width="20%">菜单名称</th>
+							<th width="8%">菜单图标</th>
+							<th width="20%">菜单URL</th>
+							<th width="15%">授权标识</th>
+							<th width="10%">排序号</th>
+							<th width="7%">状态</th>
+							<th width="20%">操作</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach items="${list}" var="menu">
-					<tr data-tt-id='${menu.menuId}'<c:if test="${menu.type ne 0}"> data-tt-parent-id='${menu.parentId}'</c:if>>  
-            		<td>${menu.name}</td>
-            		<td>${menu.icon}</td>
-                	<td>${menu.url}</td>
-                	<td>${menu.orderNum}</td>
-			        </tr>
-			        </c:forEach>
+						<c:forEach items="${list}" var="menu">
+							<tr data-tt-id='${menu.menuId}'<c:if test="${menu.type ne 0}"> data-tt-parent-id='${menu.parentId}'</c:if>>  
+			            		<td>${menu.name}</td>
+			            		<td><c:if test="${menu.icon != null}"><i class="Hui-iconfont">${menu.icon}</i></c:if></td>
+			                	<td>${menu.url}</td>
+			                	<td>${menu.perms}</td>
+			                	<td>${menu.orderNum}</td>
+			                	<th>${menu.available eq 1 ? "正常" : "禁用"}</th>
+			                	<td class="text-c">
+<%-- 			                		<shiro:hasPermission name="menu:create"> --%>
+				                        <c:if test="${menu.type ne 2}">
+				                        	<a style="text-decoration:none" class="mr-5" onClick="article_shenhe(this,'10001')" href="javascript:;">添加</a>
+				                        </c:if>
+<%-- 				                    </shiro:hasPermission> --%>
+<%-- 			                		<shiro:hasPermission name="menu:update"> --%>
+										<a style="text-decoration:none" class="mr-5" onClick="article_edit('资讯编辑','article-add.html','10001')" href="javascript:;" title="编辑">编辑</a>
+<%-- 									</shiro:hasPermission> --%>
+<%-- 									<shiro:hasPermission name="menu:delete"> --%>
+										<a style="text-decoration:none" onClick="article_del(this,'10001')" href="javascript:;" title="删除">删除</a>
+<%-- 									</shiro:hasPermission> --%>
+								</td>
+					        </tr>
+				        </c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -64,20 +86,20 @@
 		<script type="text/javascript" src="lib/treetable/jquery.treetable.js"></script>
 		<script type="text/javascript">
 			$(function(){
-				var option1 = {
+				var option = {
 	                    theme: 'vsStyle', //显示样式
 	                    expandLevel: 1, //展开三级分类
 	                };
-	                $('#menuTable').treetable(option1).treetable({ expandable: true});
+	            $('#menuTable').treetable(option);
 			});
-			/*资讯-添加*/
-			function article_add(title, url, w, h) {
-				var index = layer.open({
+			/*目录-添加*/
+			function catalog_add(title, url, w, h) {
+				layer.open({
 					type: 2,
 					title: title,
-					content: url
+					content: url,
+					area: [w, h]
 				});
-				layer.full(index);
 			}
 			/*资讯-编辑*/
 			function article_edit(title, url, id, w, h) {
