@@ -853,8 +853,33 @@ label,.placeholder{font-size:14px}
 	.visible-print-inline-block {display: inline-block !important}
 	.hidden-print {display: none !important}
 }
-
-
+/*单选 多选*/
+input[type="radio"],input[type="checkbox"] {line-height: normal; margin-top:-4px}
+.check-box,.radio-box{ display:inline-block; box-sizing:border-box; cursor:pointer; position:relative; padding-left:30px; padding-right:20px}
+.icheckbox,
+.icheckbox-red,
+.icheckbox-green,
+.icheckbox-blue,
+.icheckbox-aero,
+.icheckbox-grey,
+.icheckbox-orange,
+.icheckbox-yellow,
+.icheckbox-pink,
+.icheckbox-purple,
+.iradio,
+.iradio-red,
+.iradio-green,
+.iradio-blue,
+.iradio-aero,
+.iradio-grey,
+.iradio-orange,
+.iradio-yellow,
+.iradio-pink,
+.iradio-purple {position: absolute;top:4px;left: 0}
+@media (max-width: 767px) {
+	.responsive .check-box,
+	.responsive .radio-box{ display:block}
+}
 
 
 

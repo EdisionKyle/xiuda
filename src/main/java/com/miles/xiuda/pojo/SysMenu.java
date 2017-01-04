@@ -67,7 +67,7 @@ public class SysMenu implements Serializable {
 	/**
 	 * 状态
 	 */
-	private int available;
+	private Byte available;
 
 	/**
 	 * ztree属性
@@ -156,11 +156,11 @@ public class SysMenu implements Serializable {
 		this.orderNum = orderNum;
 	}
 
-	public int getAvailable() {
+	public Byte getAvailable() {
 		return available;
 	}
 
-	public void setAvailable(int available) {
+	public void setAvailable(Byte available) {
 		this.available = available;
 	}
 
@@ -180,4 +180,7 @@ public class SysMenu implements Serializable {
 		this.list = list;
 	}
 
+	public String makeSelfAsParentIds() {
+        return getParentIds() + getMenuId() + "/";
+    }
 }

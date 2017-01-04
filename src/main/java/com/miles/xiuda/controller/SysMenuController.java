@@ -49,7 +49,19 @@ public class SysMenuController extends AbstractController {
 		List<SysMenu> menuList = sysMenuService.queryList(map);
 
 		model.addAttribute("list", menuList);
-		return "menu/menu_list";
+		return "sys/menu-list";
+	}
+
+	@RequestMapping(value = "/menu-create/{parentId}/{type}", method = RequestMethod.GET)
+	public String menuEdit(@PathVariable("parentId") Long parentId, @PathVariable("type") Integer type, Model model) {
+		SysMenu parent = sysMenuService.queryObject(parentId);
+		model.addAttribute("parent", parent);
+		SysMenu menu = new SysMenu();
+		menu.setParentId(parentId == null ? 0 : parentId);
+		menu.setType(type);
+		menu.setParentIds(parent == null ? "0/" : parent.makeSelfAsParentIds());
+		model.addAttribute("menu", menu);
+		return "sys/menu-edit";
 	}
 
 	/**
@@ -98,11 +110,10 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 保存
 	 */
-	@RequestMapping("/save")
-	@RequiresPermissions("sys:menu:save")
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public Retmap save(@RequestBody SysMenu menu) {
 		// 数据校验
-		verifyForm(menu);
+//		verifyForm(menu);
 
 		sysMenuService.save(menu);
 
