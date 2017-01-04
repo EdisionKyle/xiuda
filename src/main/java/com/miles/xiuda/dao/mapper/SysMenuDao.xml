@@ -3,8 +3,15 @@
 
 <mapper namespace="com.miles.xiuda.dao.SysMenuDao">
 
+	<sql id="menu_column">
+		menu_id menuId, parent_id parentId,
+		name, type, url, perms,
+		icon, order_num orderNum, available
+	</sql>
 	<select id="queryObject" resultType="com.miles.xiuda.pojo.SysMenu">
-		select * from sys_menu where
+		select
+		<include refid="menu_column"></include>
+		from sys_menu where
 		menu_id = #{value}
 	</select>
 
@@ -13,23 +20,27 @@
 		(
 		`menu_id`,
 		`parent_id`,
+		`parent_ids`,
 		`name`,
+		`type`,
 		`url`,
 		`perms`,
-		`type`,
 		`icon`,
-		`order_num`
+		`order_num`,
+		`available`
 		)
 		values
 		(
 		#{menuId},
 		#{parentId},
+		#{parentIds},
 		#{name},
+		#{type},
 		#{url},
 		#{perms},
-		#{type},
 		#{icon},
-		#{orderNum}
+		#{orderNum},
+		#{available}
 		)
 	</insert>
 
@@ -44,10 +55,9 @@
 	</select>
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysMenu">
-		select menu_id menuId, parent_id parentId,
-			 name, type, url, perms,
-			 icon, order_num orderNum, available
-		from sys_menu m order by concat(parent_ids, menu_id)
+		select
+		<include refid="menu_column"></include>
+		from sys_menu m order by orderNum, concat(parent_ids, menu_id)
 	</select>
 
 	<select id="queryTotal" resultType="int">

@@ -29,8 +29,16 @@
 			<input type="hidden" name="parentId" value="${menu.parentId}" />
 			<input type="hidden" name="type" id="type" value="${menu.type}" />
 			<input type="hidden" name="parentIds" value="${menu.parentIds}" />
+			<c:if test="${not empty parent}">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" name="name" id="name" value="${parent.name}" style="width:60%">
+					</div>
+				</div>
+			</c:if>
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>菜单名称：</label>
 				<div class="formControls col-xs-8 col-sm-9">
 					<input type="text" class="input-text" name="name" id="name" value="${menu.name}" style="width:60%">
 				</div>
@@ -41,12 +49,14 @@
 					<input type="text" class="input-text" name="icon" value="${menu.icon}" style="width:60%">
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">菜单URL：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" name="icon" value="${menu.url}" style="width:60%">
+			<c:if test="${not empty parent}">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">菜单URL：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" name="url" value="${menu.url}" style="width:60%">
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2">授权标识：</label>
 				<div class="formControls col-xs-8 col-sm-9">
@@ -67,7 +77,7 @@
 						<label for="sex-1">正常</label>
 					</div>
 					<div class="radio-box">
-						<input type="radio" id="sex-2" name="available" value="0" <c:if test="${!empty menu.available || menu.available == 1}">checked</c:if>>
+						<input type="radio" id="sex-2" name="available" value="0" <c:if test="${not empty menu.available && menu.available == 1}">checked</c:if>>
 						<label for="sex-2">禁用</label>
 					</div>
 				</div>
@@ -98,29 +108,16 @@
 	});
 	//提交
 	function catalog_save_submit() {
-		$.ajax({
-			type: 'POST',
-			url: 'sys/menu/save',
-			contentType:"application/json",
-			data: JSON.stringify($("#form-catalog-add").serializeObject()),
-			dataType: 'json',
-			beforeSend: function(xhr) {
-
-			},
-			success: function(data) {
-				if(data.code == '10000'){//登录成功
-					parent.location.href ='index.html';
-				}else{
-					alert(data.msg);
-				}
-			},
-			error: function(xhr, textStatus) {
-
-			},
-			complete: function() {
-
-			}
-		});
+		$.ajax({ 
+            type:"POST", 
+            url:"sys/menu/save", 
+            dataType:"json",      
+            contentType:"application/json",               
+            data:JSON.stringify({}), 
+            success:function(data){ 
+                                       
+            } 
+         });
 	}
 </script>
 </body>
