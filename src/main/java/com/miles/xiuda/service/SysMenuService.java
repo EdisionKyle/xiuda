@@ -62,6 +62,6 @@ public interface SysMenuService {
 	/**
 	 * 删除
 	 */
-	void deleteBatch(Long[] menuIds);
+	void delete(SysMenu menu);
 
 }

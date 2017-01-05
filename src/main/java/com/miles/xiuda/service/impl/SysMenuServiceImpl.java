@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.miles.xiuda.dao.SysMenuDao;
 import com.miles.xiuda.pojo.Constants.MenuType;
 import com.miles.xiuda.pojo.SysMenu;
@@ -86,8 +88,11 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 	@Override
 	@Transactional
-	public void deleteBatch(Long[] menuIds) {
-		sysMenuDao.deleteBatch(menuIds);
+	public void delete(SysMenu menu) {
+		sysMenuDao.delete(menu.getMenuId());
+		Map<String, Object> param = Maps.newHashMap();
+		param.put("parentIds", menu.getParentIds());
+		sysMenuDao.deleteByParentIds(param);
 	}
 
 	/**

@@ -10,7 +10,7 @@
 	<head>
 		<base href=" <%=basePath%>">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<!-- 		<meta name="renderer" content="webkit|ie-comp|ie-stand"> -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta http-equiv="Cache-Control" content="no-transform" />
@@ -24,12 +24,12 @@
 	</head>
 <body>
 	<div class="page-container">
-		<form class="form form-horizontal" id="form-catalog-add">
+		<form class="form form-horizontal" id="form-menu-edit">
 			<input type="hidden" name="menuId" value="${menu.menuId}" />
 			<input type="hidden" name="parentId" value="${menu.parentId}" />
 			<input type="hidden" name="type" id="type" value="${menu.type}" />
 			<input type="hidden" name="parentIds" value="${menu.parentIds}" />
-			<c:if test="${not empty parent}">
+			<c:if test="${menu.type ne 0}">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
 					<div class="formControls col-xs-8 col-sm-9">
@@ -43,13 +43,15 @@
 					<input type="text" class="input-text" name="name" id="name" value="${menu.name}" style="width:60%">
 				</div>
 			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">菜单图标：</label>
-				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" name="icon" value="${menu.icon}" style="width:60%">
+			<c:if test="${menu.type ne 2}">
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-2">菜单图标：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" name="icon" value="${menu.icon}" style="width:60%">
+					</div>
 				</div>
-			</div>
-			<c:if test="${not empty parent}">
+			</c:if>
+			<c:if test="${menu.type eq 1}">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2">菜单URL：</label>
 					<div class="formControls col-xs-8 col-sm-9">
@@ -84,7 +86,7 @@
 			</div>
 			<div class="row cl">
 				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-					<button onClick="catalog_save_submit();" class="btn btn-primary radius" type="submit">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
+					<button onClick="menu_save_submit();" class="btn btn-primary radius" type="submit">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
 					<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 				</div>
 			</div>
@@ -107,16 +109,21 @@
 		});
 	});
 	//提交
-	function catalog_save_submit() {
-		$.ajax({ 
-            type:"POST", 
-            url:"sys/menu/save", 
-            dataType:"json",      
-            contentType:"application/json",               
-            data:JSON.stringify({}), 
-            success:function(data){ 
-                                       
-            } 
+	function menu_save_submit() {
+		$.ajax({
+            type: "POST",
+            async: false,
+            url: "sys/menu/save",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify($("#form-menu-edit").serializeObject()),
+            success: function(data){
+            	if(data.code == '10000'){//操作成功
+            		layer_close();
+				}else{
+					alert(data.msg);
+				}
+            }
          });
 	}
 </script>

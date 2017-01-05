@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miles.xiuda.handler.RTException;
@@ -52,14 +53,27 @@ public class SysMenuController extends AbstractController {
 		return "sys/menu-list";
 	}
 
-	@RequestMapping(value = "/menu-create/{parentId}/{type}", method = RequestMethod.GET)
-	public String menuEdit(@PathVariable("parentId") Long parentId, @PathVariable("type") Integer type, Model model) {
-		SysMenu parent = sysMenuService.queryObject(parentId);
-		model.addAttribute("parent", parent);
+	@RequestMapping(value = "/menu-edit", method = RequestMethod.GET)
+	public String menuEdit(@RequestParam(value = "parentId", required = false) Long parentId,
+			@RequestParam(value = "menuId" , required = false) Long menuId, Model model) {
+		SysMenu parent = null;
 		SysMenu menu = new SysMenu();
-		menu.setParentId(parentId == null ? 0 : parentId);
-		menu.setType(type);
-		menu.setParentIds(parent == null ? "0/" : parent.makeSelfAsParentIds());
+		if(parentId != null) {
+			parent = sysMenuService.queryObject(parentId);
+			menu.setParentId(parentId);
+			menu.setType(parent.getType() + 1);
+			menu.setParentIds(parent.makeSelfAsParentIds());
+		} else if(menuId == null){
+			menu.setParentId(0L);
+			menu.setType(0);
+			menu.setParentIds("0/");
+		}
+		if(menuId  != null) {
+			menu = sysMenuService.queryObject(menuId);
+			menu.setIcon(menu.getIcon().replace("&", "&amp;"));
+			parent = sysMenuService.queryObject(menu.getParentId());
+		}
+		model.addAttribute("parent", parent);
 		model.addAttribute("menu", menu);
 		return "sys/menu-edit";
 	}
@@ -110,13 +124,17 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 保存
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public Retmap save(@RequestBody SysMenu menu) {
 		// 数据校验
 //		verifyForm(menu);
 
-		sysMenuService.save(menu);
-
+		if(menu.getMenuId() != null) {
+			sysMenuService.update(menu);
+		} else{
+			sysMenuService.save(menu);
+		}
 		return Retmap.ok();
 	}
 
@@ -139,15 +157,18 @@ public class SysMenuController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public Retmap delete(@RequestBody Long[] menuIds) {
-		for (Long menuId : menuIds) {
-			if (menuId.longValue() <= 28) {
-				return Retmap.error("系统菜单，不能删除");
-			}
+	public Retmap delete(@RequestBody Long menuId) {
+		if (menuId.longValue() <= 28) {
+			return Retmap.error("系统菜单，不能删除");
 		}
-		sysMenuService.deleteBatch(menuIds);
+		SysMenu menu = sysMenuService.queryObject(menuId);
+		if(menu != null) {
+			sysMenuService.delete(menu);
+			return Retmap.ok();
+		} else {
+			return Retmap.error("找不到指定菜单，无法删除");
+		}
 
-		return Retmap.ok();
 	}
 
 	/**

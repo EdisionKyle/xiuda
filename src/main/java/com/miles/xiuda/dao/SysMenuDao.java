@@ -1,6 +1,7 @@
 package com.miles.xiuda.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.miles.xiuda.pojo.SysMenu;
 
@@ -28,5 +29,12 @@ public interface SysMenuDao extends BaseDao<SysMenu> {
 	 * @return
 	 */
 	List<SysMenu> queryNotButtonList();
+	
+	/**
+	 * 根据父菜单删除
+	 * 
+	 * @return
+	 */
+	int deleteByParentIds(Map<String, Object> param);
 
 }

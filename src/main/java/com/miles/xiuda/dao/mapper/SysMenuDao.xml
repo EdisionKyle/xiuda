@@ -4,7 +4,7 @@
 <mapper namespace="com.miles.xiuda.dao.SysMenuDao">
 
 	<sql id="menu_column">
-		menu_id menuId, parent_id parentId,
+		menu_id menuId, parent_id parentId, parent_ids parentIds,
 		name, type, url, perms,
 		icon, order_num orderNum, available
 	</sql>
@@ -57,7 +57,7 @@
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysMenu">
 		select
 		<include refid="menu_column"></include>
-		from sys_menu m order by orderNum, concat(parent_ids, menu_id)
+		from sys_menu m order by concat(parent_ids, menu_id)
 	</select>
 
 	<select id="queryTotal" resultType="int">
@@ -78,18 +78,12 @@
 		where menu_id = #{menuId}
 	</update>
 
-	<delete id="deleteBatch">
-		delete from sys_menu where menu_id in
-		<foreach item="menuId" collection="array" open="(" separator=","
-			close=")">
-			#{menuId}
-		</foreach>
-		;
-		delete from sys_role_menu where menu_id in
-		<foreach item="menuId" collection="array" open="(" separator=","
-			close=")">
-			#{menuId}
-		</foreach>
+	<delete id="delete">
+		delete from sys_menu where menu_id = #{menuId}
 	</delete>
 
+	<delete id="deleteByParentIds" parameterType="java.util.Map">
+		delete from sys_menu where parent_ids like CONCAT('%',#{parentIds},'%')
+		
+	</delete>
 </mapper>
