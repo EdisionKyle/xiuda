@@ -39,6 +39,7 @@
 							<th width="25%">角色备注</th>
 							<th width="15%">状态</th>
 							<th width="25%">创建时间</th>
+							<th width="20%">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,6 +50,10 @@
 			                	<td>${role.remark}</td>
 			                	<th>${role.available eq 1 ? "正常" : "禁用"}</th>
 			                	<td>${role.createTime}</td>
+			                	<td>
+			                		<a style="text-decoration:none" class="ml-5" onClick="role_edit(this, '编辑角色', 'sys/role/role-edit', '80%', '80%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+									<a style="text-decoration:none" class="ml-5" onClick="role_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

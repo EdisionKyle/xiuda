@@ -33,7 +33,7 @@
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" name="name" id="name" value="${parent.name}" style="width:60%">
+						<input type="text" class="input-text" name="name" id="name" value="${parent.name}" <c:if test="${not empty parent.name}">readonly="readonly"</c:if> style="width:60%">
 					</div>
 				</div>
 			</c:if>
@@ -120,6 +120,7 @@
             success: function(data){
             	if(data.code == '10000'){//操作成功
             		layer_close();
+            		parent.location.href ='sys/menu/list';
 				}else{
 					alert(data.msg);
 				}

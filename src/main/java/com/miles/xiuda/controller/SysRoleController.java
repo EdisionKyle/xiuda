@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miles.xiuda.pojo.SysRole;
 import com.miles.xiuda.service.SysRoleMenuService;
@@ -49,7 +48,7 @@ public class SysRoleController extends AbstractController {
 		// 查询列表数据
 		List<SysRole> list = sysRoleService.queryList(map);
 		model.addAttribute("list", list);
-		return "role/role_list";
+		return "sys/role-list";
 	}
 	
 	/**

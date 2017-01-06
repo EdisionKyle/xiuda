@@ -71,7 +71,7 @@
 										<a style="text-decoration:none" class="mr-5" onClick="menu_edit(this, '菜单编辑','sys/menu/menu-edit', '80%', '80%')" href="javascript:;" title="编辑">编辑</a>
 <%-- 									</shiro:hasPermission> --%>
 <%-- 									<shiro:hasPermission name="menu:delete"> --%>
-										<a style="text-decoration:none" onClick="article_del(this,'10001')" href="javascript:;" title="删除">删除</a>
+										<a style="text-decoration:none" onClick="menu_del(this)" href="javascript:;" title="删除">删除</a>
 <%-- 									</shiro:hasPermission> --%>
 								</td>
 					        </tr>
@@ -120,20 +120,27 @@
 				});
 			}
 			/*菜单-删除*/
-			function article_del(obj, id) {
+			function menu_del(obj) {
+				console.log($(obj).parents("tr").attr("data-tt-id"));
 				layer.confirm('确认要删除吗？', function(index) {
 					$.ajax({
 			            type: "POST",
 			            async: false,
-			            url: "sys/menu/save",
+			            url: "sys/menu/delete",
 			            dataType: "json",
-			            contentType: "application/json",
-			            data: {menuId : $(obj).parents("tr").attr("data-tt-id")},
+			            data: {menuId: $(obj).parents("tr").attr("data-tt-id")},
 			            success: function(data){
 			            	if(data.code == '10000'){//操作成功
-			            		layer_close();
+			            		layer.msg('删除成功', {
+									icon: 6,
+									time: 1000
+								});
+			            		window.location.href ='sys/menu/list';
 							}else{
-								alert(data.msg);
+								layer.msg(data.msg, {
+									icon: 5,
+									time: 1000
+								});
 							}
 			            }
 			         });

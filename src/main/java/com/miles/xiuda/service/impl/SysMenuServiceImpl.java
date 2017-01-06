@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.miles.xiuda.dao.SysMenuDao;
 import com.miles.xiuda.pojo.Constants.MenuType;
@@ -90,9 +89,11 @@ public class SysMenuServiceImpl implements SysMenuService {
 	@Transactional
 	public void delete(SysMenu menu) {
 		sysMenuDao.delete(menu.getMenuId());
-		Map<String, Object> param = Maps.newHashMap();
-		param.put("parentIds", menu.getParentIds());
-		sysMenuDao.deleteByParentIds(param);
+		if(menu.getType() < 2) {//目前支持二级菜单，如果是按钮，则没有子节点
+			Map<String, Object> param = Maps.newHashMap();
+			param.put("parentIds", menu.getParentIds());
+			sysMenuDao.deleteByParentIds(param);
+		}
 	}
 
 	/**

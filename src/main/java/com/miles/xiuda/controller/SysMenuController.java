@@ -155,9 +155,9 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 删除
 	 */
-	@RequestMapping("/delete")
-	@RequiresPermissions("sys:menu:delete")
-	public Retmap delete(@RequestBody Long menuId) {
+	@ResponseBody
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public Retmap delete(Long menuId) {
 		if (menuId.longValue() <= 28) {
 			return Retmap.error("系统菜单，不能删除");
 		}
