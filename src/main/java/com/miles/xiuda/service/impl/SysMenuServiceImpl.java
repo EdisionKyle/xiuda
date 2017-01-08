@@ -92,6 +92,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 		if(menu.getType() < 2) {//目前支持二级菜单，如果是按钮，则没有子节点
 			Map<String, Object> param = Maps.newHashMap();
 			param.put("parentIds", menu.getParentIds());
+			param.put("menuId", menu.getMenuId());
 			sysMenuDao.deleteByParentIds(param);
 		}
 	}

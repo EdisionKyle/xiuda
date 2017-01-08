@@ -38,7 +38,9 @@
 		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 菜单列表
 		</nav>
 		<div class="page-container">
-			<div class="cl pd-5 bg-1 bk-gray"> <span class="l"><a class="btn btn-primary radius" data-title="添加目录" onclick="catalog_add('添加目录', 'sys/menu/menu-edit', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加目录</a></span></div>
+			<div class="cl pd-5 bg-1 bk-gray">
+				<span class="l"><a class="btn btn-primary radius" data-title="添加目录" onclick="catalog_add('添加目录', 'sys/menu/menu-edit', '80%', '100%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加目录</a></span>
+			</div>
 			<div class="mt-10">
 				<table id="menuTable" >
 					<thead>
@@ -56,22 +58,22 @@
 						<c:forEach items="${list}" var="menu">
 							<tr data-tt-id='${menu.menuId}'<c:if test="${menu.type ne 0}"> data-tt-parent-id='${menu.parentId}'</c:if>>  
 			            		<td>${menu.name}</td>
-			            		<td><c:if test="${menu.icon != null}"><i class="Hui-iconfont">${menu.icon}</i></c:if></td>
+			            		<td><c:if test="${menu.icon != null}"><i class="Hui-iconfont"><c:if test="${not empty menu.icon}">&${menu.icon}</c:if></i></c:if></td>
 			                	<td>${menu.url}</td>
 			                	<td>${menu.perms}</td>
 			                	<td>${menu.orderNum}</td>
-			                	<th>${menu.available eq 1 ? "正常" : "禁用"}</th>
+			                	<td>${menu.available eq 1 ? "正常" : "禁用"}</td>
 			                	<td class="text-c">
 <%-- 			                		<shiro:hasPermission name="menu:create"> --%>
-				                        <c:if test="${menu.type ne 2}">
-				                        	<a style="text-decoration:none" class="mr-5" onClick="child_add(this, '添加子节点', 'sys/menu/menu-edit', '80%', '80%')" href="javascript:;">添加</a>
-				                        </c:if>
+			                        <c:if test="${menu.type ne 2}">
+			                        	<a style="text-decoration:none" class="mr-5" onClick="child_add(this, '添加子节点', 'sys/menu/menu-edit', '80%', '100%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i></a>
+			                        </c:if>
 <%-- 				                    </shiro:hasPermission> --%>
 <%-- 			                		<shiro:hasPermission name="menu:update"> --%>
-										<a style="text-decoration:none" class="mr-5" onClick="menu_edit(this, '菜单编辑','sys/menu/menu-edit', '80%', '80%')" href="javascript:;" title="编辑">编辑</a>
+									<a style="text-decoration:none" class="mr-5" onClick="menu_edit(this, '菜单编辑','sys/menu/menu-edit', '80%', '100%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 <%-- 									</shiro:hasPermission> --%>
 <%-- 									<shiro:hasPermission name="menu:delete"> --%>
-										<a style="text-decoration:none" onClick="menu_del(this)" href="javascript:;" title="删除">删除</a>
+									<a style="text-decoration:none" onClick="menu_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
 <%-- 									</shiro:hasPermission> --%>
 								</td>
 					        </tr>
@@ -121,11 +123,9 @@
 			}
 			/*菜单-删除*/
 			function menu_del(obj) {
-				console.log($(obj).parents("tr").attr("data-tt-id"));
 				layer.confirm('确认要删除吗？', function(index) {
 					$.ajax({
 			            type: "POST",
-			            async: false,
 			            url: "sys/menu/delete",
 			            dataType: "json",
 			            data: {menuId: $(obj).parents("tr").attr("data-tt-id")},

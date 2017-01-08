@@ -29,11 +29,28 @@
 			<input type="hidden" name="parentId" value="${menu.parentId}" />
 			<input type="hidden" name="type" id="type" value="${menu.type}" />
 			<input type="hidden" name="parentIds" value="${menu.parentIds}" />
+			<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2">类型：</label>
+				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+					<div class="radio-box">
+						<input type="radio" id="type-1" value="0" <c:choose><c:when test="${not empty menu.type && menu.type == 0}">checked</c:when><c:otherwise>disabled='disabled'</c:otherwise></c:choose>>
+						<label for="type-1">目录</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="type-2" value="1" <c:choose><c:when test="${not empty menu.type && menu.type == 1}">checked</c:when><c:otherwise>disabled='disabled'</c:otherwise></c:choose>>
+						<label for="type-2">菜单</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="type-3" value="2" <c:choose><c:when test="${not empty menu.type && menu.type == 2}">checked</c:when><c:otherwise>disabled='disabled'</c:otherwise></c:choose>>
+						<label for="type-3">按钮</label>
+					</div>
+				</div>
+			</div>
 			<c:if test="${menu.type ne 0}">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" name="name" id="name" value="${parent.name}" <c:if test="${not empty parent.name}">readonly="readonly"</c:if> style="width:60%">
+						<input type="text" class="input-text" name="parentName" id="parentName" value="${parent.name}" <c:if test="${not empty parent.name}">readonly="readonly"</c:if> style="width:60%">
 					</div>
 				</div>
 			</c:if>
@@ -47,7 +64,7 @@
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-2">菜单图标：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" name="icon" value="${menu.icon}" style="width:60%">
+						<input type="text" class="input-text" name="icon" value='<c:if test="${not empty menu.icon}">&amp;${menu.icon}</c:if>' style="width:60%">
 					</div>
 				</div>
 			</c:if>
@@ -86,7 +103,7 @@
 			</div>
 			<div class="row cl">
 				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-					<button onClick="menu_save_submit();" class="btn btn-primary radius" type="submit">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
+					<button onClick="menu_save_submit();" class="btn btn-primary radius" type="button">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
 					<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 				</div>
 			</div>
@@ -112,7 +129,6 @@
 	function menu_save_submit() {
 		$.ajax({
             type: "POST",
-            async: false,
             url: "sys/menu/save",
             dataType: "json",
             contentType: "application/json",

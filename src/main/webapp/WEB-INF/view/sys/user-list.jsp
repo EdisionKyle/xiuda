@@ -22,15 +22,15 @@
 		<link rel="stylesheet" type="text/css" href="lib/ztree/css/metroStyle/metroStyle.css" />
 		<style type="text/css">
 			</style>
-		<title>菜单管理</title>
+		<title>用户管理</title>
 	</head>
 
 	<body>
-		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 菜单列表
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 用户列表
 		</nav>
 		<div class="page-container">
 			<div class="cl pd-5 bg-1 bk-gray">
-				<span class="l"><a class="btn btn-primary radius" data-title="添加角色" onclick="role_add('添加角色', 'sys/role/info/0', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a></span>
+				<span class="l"><a class="btn btn-primary radius" data-title="添加用户" onclick="user_add('添加用户', 'sys/role/info', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a></span>
 			</div>
 			<div class="mt-10">
 				<table class="table table-border table-bordered table-bg table-hover table-sort">

@@ -83,7 +83,7 @@
 	</delete>
 
 	<delete id="deleteByParentIds" parameterType="java.util.Map">
-		delete from sys_menu where parent_ids like CONCAT('%',#{parentIds},'%')
+		delete from sys_menu where parent_id = #{menuId} and parent_ids like CONCAT('%',#{parentIds},'%')
 		
 	</delete>
 </mapper>

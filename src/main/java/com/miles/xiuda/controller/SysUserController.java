@@ -10,15 +10,14 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.miles.xiuda.pojo.SysUser;
 import com.miles.xiuda.service.SysUserRoleService;
 import com.miles.xiuda.service.SysUserService;
-import com.miles.xiuda.util.PageUtil;
 import com.miles.xiuda.util.Retmap;
 import com.miles.xiuda.util.ShiroUtil;
 
@@ -29,7 +28,7 @@ import com.miles.xiuda.util.ShiroUtil;
  *  Copyright (C) 2017, tianpc0318@163.com All Rights Reserved.
  *  @author milesloner
  */
-@RestController
+@Controller
 @RequestMapping("/sys/user")
 public class SysUserController extends AbstractController {
 
@@ -42,16 +41,16 @@ public class SysUserController extends AbstractController {
 	 * 所有用户列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:user:list")
+//	@RequiresPermissions("sys:user:list")
 	public Retmap list(Integer page, Integer limit) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		// 查询列表数据
 		List<SysUser> userList = sysUserService.queryList(map);
-		int total = sysUserService.queryTotal(map);
-		PageUtil pageUtil = new PageUtil(userList, total, limit, page);
-		return Retmap.ok().put("page", pageUtil);
+//		int total = sysUserService.queryTotal(map);
+//		PageUtil pageUtil = new PageUtil(userList, total, limit, page);
+		return Retmap.ok().put("list", userList);
 	}
 
 	/**

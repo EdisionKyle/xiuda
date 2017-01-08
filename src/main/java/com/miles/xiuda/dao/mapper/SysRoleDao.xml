@@ -3,14 +3,19 @@
 
 <mapper namespace="com.miles.xiuda.dao.SysRoleDao">
 
+	<sql id="role_column">
+		role_id roleId, role_name roleName, remark, available
+	</sql>
 	<select id="queryObject" resultType="com.miles.xiuda.pojo.SysRole">
-		select * from sys_role where
+		select 
+		<include refid="role_column"></include>
+		from sys_role where
 		role_id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysRole">
 		select role_id roleId, role_name roleName,
-			 remark, available, create_time createTime 
+			 remark, available, date_format(create_time, '%Y-%m-%d %H:%i:%s') createTimeText 
 		from sys_role order by role_id asc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -48,24 +53,10 @@
 		where role_id = #{roleId}
 	</update>
 
-	<delete id="deleteBatch">
-		delete from sys_role where role_id in
-		<foreach item="roleId" collection="array" open="(" separator=","
-			close=")">
-			#{roleId}
-		</foreach>
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from sys_role where role_id = #{roleId}
 		;
-		delete from sys_role_menu where role_id in
-		<foreach item="roleId" collection="array" open="(" separator=","
-			close=")">
-			#{roleId}
-		</foreach>
-		;
-		delete from sys_user_role where role_id in
-		<foreach item="roleId" collection="array" open="(" separator=","
-			close=")">
-			#{roleId}
-		</foreach>
+		delete from sys_role_menu where role_id = #{roleId}
 	</delete>
 
 </mapper>

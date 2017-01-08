@@ -70,7 +70,6 @@ public class SysMenuController extends AbstractController {
 		}
 		if(menuId  != null) {
 			menu = sysMenuService.queryObject(menuId);
-			menu.setIcon(menu.getIcon().replace("&", "&amp;"));
 			parent = sysMenuService.queryObject(menu.getParentId());
 		}
 		model.addAttribute("parent", parent);
@@ -102,7 +101,7 @@ public class SysMenuController extends AbstractController {
 	 * 角色授权菜单
 	 */
 	@ResponseBody
-	@RequestMapping("/perms")
+	@RequestMapping(value = "/perms", method = RequestMethod.GET)
 	public Retmap perms() {
 		// 查询列表数据
 		List<SysMenu> menuList = sysMenuService
@@ -115,7 +114,6 @@ public class SysMenuController extends AbstractController {
 	 * 菜单信息
 	 */
 	@RequestMapping("/info/{menuId}")
-	@RequiresPermissions("sys:menu:info")
 	public Retmap info(@PathVariable("menuId") Long menuId) {
 		SysMenu menu = sysMenuService.queryObject(menuId);
 		return Retmap.ok().put("menu", menu);
@@ -129,7 +127,6 @@ public class SysMenuController extends AbstractController {
 	public Retmap save(@RequestBody SysMenu menu) {
 		// 数据校验
 //		verifyForm(menu);
-
 		if(menu.getMenuId() != null) {
 			sysMenuService.update(menu);
 		} else{

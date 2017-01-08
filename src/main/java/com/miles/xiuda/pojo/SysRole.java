@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 角色
  * 
@@ -40,7 +42,10 @@ public class SysRole implements Serializable {
 	 * 创建时间
 	 */
 	private Date createTime;
-
+	/**
+	 * 创建时间
+	 */
+	private String createTimeText;
 	/**
 	 * 设置：
 	 * @param roleId 
@@ -89,6 +94,7 @@ public class SysRole implements Serializable {
 		return remark;
 	}
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -111,6 +117,14 @@ public class SysRole implements Serializable {
 
 	public void setAvailable(int available) {
 		this.available = available;
+	}
+
+	public String getCreateTimeText() {
+		return createTimeText;
+	}
+
+	public void setCreateTimeText(String createTimeText) {
+		this.createTimeText = createTimeText;
 	}
 	
 }

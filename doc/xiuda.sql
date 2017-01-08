@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-01-04 02:02:30
+Date: 2017-01-08 23:47:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,25 +31,23 @@ CREATE TABLE `sys_menu` (
   `order_num` int(11) DEFAULT NULL COMMENT '排序',
   `available` tinyint(1) DEFAULT '0' COMMENT '是否可用',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '0', '0/', '系统管理', '0', '', '', '&#xe62e;', '0', '1');
+INSERT INTO `sys_menu` VALUES ('1', '0', '0/', '系统管理', '0', '', '', '#xe62e;', '0', '1');
 INSERT INTO `sys_menu` VALUES ('2', '1', '0/1/', '菜单管理', '1', '/sys/menu/list', '', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('3', '1', '0/1/', '角色管理', '1', '/sys/role/list', '', '', '0', '1');
-INSERT INTO `sys_menu` VALUES ('4', '0', '0/', '工单管理', '0', '', '', '&#xe61a;', '0', '1');
-INSERT INTO `sys_menu` VALUES ('5', '4', '0/4/', '工单列表', '1', '/sys/menu/list', '', '', '0', '1');
-INSERT INTO `sys_menu` VALUES ('6', '4', '0/4/', '工单报表', '1', '/sys/role/list', '', '', '0', '1');
+INSERT INTO `sys_menu` VALUES ('4', '0', '0/', '工单管理', '0', '', '', '#xe61a;', '0', '1');
 INSERT INTO `sys_menu` VALUES ('7', '2', '0/1/2/', '菜单新建', '2', '', 'menu:create', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('8', '2', '0/1/2/', '菜单修改', '2', '/sys/menu/list', 'menu:update', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('9', '2', '0/1/2/', '菜单删除', '2', '/sys/role/list', 'menu:delete', '', '0', '1');
-INSERT INTO `sys_menu` VALUES ('10', '5', '0/4/5/', '工单修改', '2', '', '', '', '0', '1');
-INSERT INTO `sys_menu` VALUES ('11', '5', '0/4/5/', '工单新建', '2', '', '', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('12', '3', '0/1/3/', '角色新增', '2', '', 'role:create', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('13', '3', '0/1/3/', '角色修改', '2', '', 'role:update', '', '0', '1');
 INSERT INTO `sys_menu` VALUES ('14', '3', '0/1/3/', '角色删除', '2', '', 'role:delete', '', '0', '1');
+INSERT INTO `sys_menu` VALUES ('93', '4', '0/4/', '工单删除', '1', '', '', '', '2', '1');
+INSERT INTO `sys_menu` VALUES ('94', '4', '0/4/', '工单更新', '1', '', '', '', null, '1');
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -62,13 +60,16 @@ CREATE TABLE `sys_role` (
   `available` tinyint(1) DEFAULT '0',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统角色';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='系统角色';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', '超级管理员', '拥有全部权限', '1', '2017-01-04 01:12:39');
 INSERT INTO `sys_role` VALUES ('2', '业务员', '业务员拥有普通操作权限', '1', '2017-01-03 04:14:31');
+INSERT INTO `sys_role` VALUES ('6', '普通管理员', '一般权限', '0', '2017-01-07 23:52:59');
+INSERT INTO `sys_role` VALUES ('7', '产品人员', '产品权限', '0', '2017-01-07 23:55:40');
+INSERT INTO `sys_role` VALUES ('8', '技术人员', '技术权限', '0', '2017-01-07 23:57:15');
 
 -- ----------------------------
 -- Table structure for `sys_role_menu`
@@ -80,11 +81,40 @@ CREATE TABLE `sys_role_menu` (
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+INSERT INTO `sys_role_menu` VALUES ('24', '6', '1', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('25', '6', '2', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('26', '6', '7', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('27', '6', '8', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('28', '6', '9', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('29', '6', '3', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('30', '6', '12', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('31', '6', '13', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('32', '6', '14', '2017-01-07 23:52:59');
+INSERT INTO `sys_role_menu` VALUES ('33', '7', '1', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('34', '7', '3', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('35', '7', '12', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('36', '7', '13', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('37', '7', '14', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('38', '7', '4', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('39', '7', '93', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('40', '7', '94', '2017-01-07 23:55:40');
+INSERT INTO `sys_role_menu` VALUES ('41', '8', '1', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('42', '8', '2', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('43', '8', '7', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('44', '8', '8', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('45', '8', '9', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('46', '8', '3', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('47', '8', '12', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('48', '8', '13', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('49', '8', '14', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('50', '8', '4', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('51', '8', '93', '2017-01-07 23:57:15');
+INSERT INTO `sys_role_menu` VALUES ('52', '8', '94', '2017-01-07 23:57:15');
 
 -- ----------------------------
 -- Table structure for `sys_user`

@@ -24,6 +24,6 @@ public interface SysRoleService {
 
 	void update(SysRole role);
 
-	void deleteBatch(Long[] roleIds);
+	void delete(Long roleId);
 
 }

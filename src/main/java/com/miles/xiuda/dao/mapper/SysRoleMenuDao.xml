@@ -7,14 +7,16 @@
 		insert into sys_role_menu
 		(
 		`role_id`,
-		`menu_id`
+		`menu_id`,
+		`create_time`
 		)
 		values
 		<foreach collection="menuIdList" item="item" index="index"
 			separator=",">
 			(
 			#{roleId},
-			#{item}
+			#{item},
+			#{createTime}
 			)
 		</foreach>
 	</insert>

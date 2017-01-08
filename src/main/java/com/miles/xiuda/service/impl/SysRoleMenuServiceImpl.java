@@ -1,5 +1,6 @@
 package com.miles.xiuda.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("roleId", roleId);
 		map.put("menuIdList", menuIdList);
+		map.put("createTime", new Date());
 		sysRoleMenuDao.save(map);
 	}
 
