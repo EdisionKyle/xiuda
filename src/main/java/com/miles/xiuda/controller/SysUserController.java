@@ -11,11 +11,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.common.collect.Maps;
+import com.miles.xiuda.pojo.SysRole;
 import com.miles.xiuda.pojo.SysUser;
+import com.miles.xiuda.service.SysRoleService;
 import com.miles.xiuda.service.SysUserRoleService;
 import com.miles.xiuda.service.SysUserService;
 import com.miles.xiuda.util.Retmap;
@@ -35,6 +39,8 @@ public class SysUserController extends AbstractController {
 	@Resource
 	private SysUserService sysUserService;
 	@Resource
+	private SysRoleService sysRoleService;
+	@Resource
 	private SysUserRoleService sysUserRoleService;
 
 	/**
@@ -42,15 +48,18 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 //	@RequiresPermissions("sys:user:list")
-	public Retmap list(Integer page, Integer limit) {
+	public String list(Integer page, Integer limit, Model model) {
 		Map<String, Object> map = new HashMap<>();
+		page = 1;
+		limit = 100;
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		// 查询列表数据
 		List<SysUser> userList = sysUserService.queryList(map);
+		model.addAttribute("list", userList);
 //		int total = sysUserService.queryTotal(map);
 //		PageUtil pageUtil = new PageUtil(userList, total, limit, page);
-		return Retmap.ok().put("list", userList);
+		return "sys/user-list";
 	}
 
 	/**
@@ -88,13 +97,21 @@ public class SysUserController extends AbstractController {
 	 * 用户信息
 	 */
 	@RequestMapping("/info/{userId}")
-	@RequiresPermissions("sys:user:info")
-	public Retmap info(@PathVariable("userId") Long userId) {
-		SysUser user = sysUserService.queryObject(userId);
+//	@RequiresPermissions("sys:user:info")
+	public String info(@PathVariable("userId") Long userId, Model model) {
+		SysUser user = null;
+		if(userId != null ) {
+			user = sysUserService.queryObject(userId);
+		}
 		// 获取用户所属的角色列表
-		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
-		user.setRoleIdList(roleIdList);
-		return Retmap.ok().put("user", user);
+//		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
+//		user.setRoleIdList(roleIdList);
+		Map<String, Object> params = Maps.newHashMap();
+		params.put("available", 1);
+		List<SysRole> roleList = sysRoleService.queryList(params);
+		model.addAttribute("user", user);
+		model.addAttribute("roleList", roleList);
+		return "sys/user-edit";
 	}
 
 	/**

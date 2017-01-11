@@ -13,10 +13,16 @@
 		role_id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.miles.xiuda.pojo.SysRole">
+	<select id="queryList" parameterType="java.util.Map" resultType="com.miles.xiuda.pojo.SysRole">
 		select role_id roleId, role_name roleName,
 			 remark, available, date_format(create_time, '%Y-%m-%d %H:%i:%s') createTimeText 
-		from sys_role order by role_id asc
+		from sys_role
+		<where>
+			<if test="available != null">
+		         available = #{available}
+		    </if>
+		</where>
+		order by role_id asc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

@@ -110,7 +110,7 @@
 	<aop:aspectj-autoproxy />
 
 	<!-- 异常处理 -->
-	<bean id="rTExceptionHandler" class="com.miles.xiuda.handler.RTExceptionHandler" />
+<!-- 	<bean id="rTExceptionHandler" class="com.miles.xiuda.handler.RTExceptionHandler" /> -->
 
 	<!-- Kaptcha验证码生成器 -->
 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
@@ -127,5 +127,5 @@
 	    </property>
 	</bean>
 	<!-- Shiro配置 -->
-	<import resource="applicationContext-shiro.xml" />
+<!-- 	<import resource="applicationContext-shiro.xml" /> -->
 </beans>

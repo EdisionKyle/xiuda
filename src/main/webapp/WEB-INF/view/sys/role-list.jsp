@@ -30,7 +30,7 @@
 		</nav>
 		<div class="page-container">
 			<div class="cl pd-5 bg-1 bk-gray">
-				<span class="l"><a class="btn btn-primary radius" data-title="添加角色" onclick="role_add('添加角色', 'sys/role/info/0', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a></span>
+				<span class="l"><a class="btn btn-primary radius" data-title="添加角色" onclick="role_add('添加角色', 'sys/role/info/0', '100%', '100%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a></span>
 			</div>
 			<div class="mt-10">
 				<table class="table table-border table-bordered table-bg table-hover table-sort">
@@ -53,7 +53,7 @@
 			                	<th>${role.available eq 1 ? "正常" : "禁用"}</th>
 			                	<td>${role.createTimeText}</td>
 			                	<td>
-			                		<a style="text-decoration:none" class="ml-5" onClick="role_edit(this, '编辑角色', 'sys/role/info', '80%', '80%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+			                		<a style="text-decoration:none" class="ml-5" onClick="role_edit(this, '编辑角色', 'sys/role/info', '100%', '100%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 									<a style="text-decoration:none" class="ml-5" onClick="role_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
 								</td>
 							</tr>
@@ -76,10 +76,10 @@
 					type: 2,
 					title: title,
 					maxmin: true,
-					content: url
-// 					area: [w, h]
+					content: url,
+					area: [w, h]
 				});
-				layer.full(index);
+// 				layer.full(index);
 			}
 			/*角色-编辑*/
 			function role_edit(obj, title, url, w, h) {
@@ -87,8 +87,8 @@
 					type: 2,
 					title: title,
 					maxmin: true,
-					content: url + '/' + $(obj).parents("tr").attr("data-tt-id")
-// 					area: [w, h]
+					content: url + '/' + $(obj).parents("tr").attr("data-tt-id"),
+					area: [w, h]
 				});
 				layer.full(index);
 			}

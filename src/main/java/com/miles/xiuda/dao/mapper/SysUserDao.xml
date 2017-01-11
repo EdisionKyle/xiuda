@@ -3,9 +3,20 @@
 
 <mapper namespace="com.miles.xiuda.dao.SysUserDao">
 
+	<sql id="user_column">
+		user_id userId, user_name username, user_no userNo,
+		real_name realName, mobile, telphone, email,
+		user_job userJob, role_id roleName, org_id orgName,
+	 	create_time createTimeText, create_user createUser, status
+	</sql>
+
 	<select id="queryObject" resultType="com.miles.xiuda.pojo.SysUser">
-		select * from sys_user where
-		user_id = #{value}
+		select user_id userId, user_name username, user_no userNo,
+			real_name realName, mobile, telphone, email,
+			user_job userJob, b.role_id roleId, b.role_name roleName, org_id orgName,
+	 		a.create_time createTimeText, a.create_user createUser, status
+		from sys_user a, sys_role b where a.role_id = b.role_id
+		and user_id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.miles.xiuda.pojo.SysUser">

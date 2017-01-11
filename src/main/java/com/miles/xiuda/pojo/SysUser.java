@@ -2,7 +2,6 @@ package com.miles.xiuda.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 系统用户
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 用户ID
 	 */
@@ -30,24 +29,51 @@ public class SysUser implements Serializable {
 	private transient String password;
 
 	/**
-	 * 邮箱
+	 * 员工编号
 	 */
-	private String email;
+	private String userNo;
+
+	/**
+	 * 员工姓名
+	 */
+	private String realName;
 
 	/**
 	 * 手机号
 	 */
 	private String mobile;
+	/**
+	 * 固定电话
+	 */
+	private String telphone;
+	/**
+	 * 邮箱
+	 */
+	private String email;
+	/**
+	 * 员工职位
+	 */
+	private String userJob;
 
 	/**
-	 * 状态  0：禁用   1：正常
+	 * 所属角色Id
 	 */
-	private Integer status;
-	
+	private String roleId;
+
 	/**
-	 * 角色ID列表
+	 * 所属角色描述
 	 */
-	private List<Long> roleIdList;
+	private String roleName;
+
+	/**
+	 * 服务商Id
+	 */
+	private String orgId;
+
+	/**
+	 * 服务商描述
+	 */
+	private String orgName;
 
 	/**
 	 * 创建时间
@@ -55,123 +81,163 @@ public class SysUser implements Serializable {
 	private Date createTime;
 
 	/**
-	 * 设置：
-	 * @param userId 
+	 * 创建时间描述
 	 */
+	private String createTimeText;
+
+	/**
+	 * 创建人
+	 */
+	private String createUser;
+
+	/**
+	 * 状态 0：禁用 1：正常
+	 */
+	private Byte status;
+
+	public Long getUserId() {
+		return userId;
+	}
+
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	/**
-	 * 获取：
-	 * @return Long
-	 */
-	public Long getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
-	
-	/**
-	 * 设置：用户名
-	 * @param username 用户名
-	 */
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	/**
-	 * 获取：用户名
-	 * @return String
-	 */
-	public String getUsername() {
-		return username;
+	public String getPassword() {
+		return password;
 	}
-	
-	/**
-	 * 设置：密码
-	 * @param password 密码
-	 */
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * 获取：密码
-	 * @return String
-	 */
-	public String getPassword() {
-		return password;
-	}
-	
-	/**
-	 * 设置：邮箱
-	 * @param email 邮箱
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public String getUserNo() {
+		return userNo;
 	}
 
-	/**
-	 * 获取：邮箱
-	 * @return String
-	 */
-	public String getEmail() {
-		return email;
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
 	}
-	
-	/**
-	 * 设置：手机号
-	 * @param mobile 手机号
-	 */
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	/**
-	 * 获取：手机号
-	 * @return String
-	 */
-	public String getMobile() {
-		return mobile;
-	}
-	
-	/**
-	 * 设置：状态  0：禁用   1：正常
-	 * @param status 状态  0：禁用   1：正常
-	 */
-	public void setStatus(Integer status) {
-		this.status = status;
+	public String getTelphone() {
+		return telphone;
 	}
 
-	/**
-	 * 获取：状态  0：禁用   1：正常
-	 * @return Integer
-	 */
-	public Integer getStatus() {
-		return status;
-	}
-	
-	/**
-	 * 设置：创建时间
-	 * @param createTime 创建时间
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setTelphone(String telphone) {
+		this.telphone = telphone;
 	}
 
-	/**
-	 * 获取：创建时间
-	 * @return Date
-	 */
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUserJob() {
+		return userJob;
+	}
+
+	public void setUserJob(String userJob) {
+		this.userJob = userJob;
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public List<Long> getRoleIdList() {
-		return roleIdList;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public void setRoleIdList(List<Long> roleIdList) {
-		this.roleIdList = roleIdList;
+	public String getCreateTimeText() {
+		return createTimeText;
 	}
-	
+
+	public void setCreateTimeText(String createTimeText) {
+		this.createTimeText = createTimeText;
+	}
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	public Byte getStatus() {
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "SysUser [userId=" + userId + ", username=" + username + ", userNo=" + userNo + ", realName=" + realName
+				+ ", mobile=" + mobile + ", telphone=" + telphone + ", email=" + email + ", userJob=" + userJob
+				+ ", roleId=" + roleId + ", roleName=" + roleName + ", orgId=" + orgId + ", orgName=" + orgName
+				+ ", createTime=" + createTime + ", createTimeText=" + createTimeText + ", createUser=" + createUser
+				+ ", status=" + status + "]";
+	}
+
 }

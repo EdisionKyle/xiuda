@@ -22,26 +22,30 @@
 		<link rel="stylesheet" type="text/css" href="lib/ztree/css/metroStyle/metroStyle.css" />
 		<style type="text/css">
 			</style>
-		<title>用户管理</title>
+		<title>员工管理</title>
 	</head>
 
 	<body>
-		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 用户列表
+		<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 员工列表
 		</nav>
 		<div class="page-container">
 			<div class="cl pd-5 bg-1 bk-gray">
-				<span class="l"><a class="btn btn-primary radius" data-title="添加用户" onclick="user_add('添加用户', 'sys/role/info', '80%', '80%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a></span>
+				<span class="l"><a class="btn btn-primary radius" data-title="添加员工" onclick="user_add('添加员工', 'sys/user/info', '100%', '100%')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加员工</a></span>
 			</div>
 			<div class="mt-10">
 				<table class="table table-border table-bordered table-bg table-hover table-sort">
 					<thead>
 						<tr class="text-c">
-							<th width="10%">角色ID</th>
-							<th width="15%">角色名称</th>
-							<th width="25%">角色备注</th>
-							<th width="10%">状态</th>
+							<th width="15%">员工编号</th>
+							<th width="25%">员工姓名</th>
+							<th width="10%">手机号码</th>
+							<th width="20%">固定电话</th>
+							<th width="20%">邮箱</th>
+							<th width="20%">职位</th>
+							<th width="20%">所属角色</th>
+							<th width="20%">服务商</th>
 							<th width="20%">创建时间</th>
-							<th width="20%">操作</th>
+							<th width="20%">状态</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,7 +57,7 @@
 			                	<th>${role.available eq 1 ? "正常" : "禁用"}</th>
 			                	<td>${role.createTimeText}</td>
 			                	<td>
-			                		<a style="text-decoration:none" class="ml-5" onClick="role_edit(this, '编辑角色', 'sys/role/info', '80%', '80%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+			                		<a style="text-decoration:none" class="ml-5" onClick="role_edit(this, '编辑角色', 'sys/role/info', '100%', '100%')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 									<a style="text-decoration:none" class="ml-5" onClick="role_del(this)" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
 								</td>
 							</tr>
@@ -70,30 +74,28 @@
 			$(function(){
 				
 			});
-			/*角色-添加*/
-			function role_add(title, url, w, h) {
-				var index = layer.open({
+			/*员工-添加*/
+			function user_add(title, url, w, h) {
+				layer.open({
 					type: 2,
 					title: title,
 					maxmin: true,
-					content: url
-// 					area: [w, h]
+					content: url,
+					area: [w, h]
 				});
-				layer.full(index);
 			}
-			/*角色-编辑*/
-			function role_edit(obj, title, url, w, h) {
-				var index = layer.open({
+			/*员工-编辑*/
+			function user_edit(obj, title, url, w, h) {
+				layer.open({
 					type: 2,
 					title: title,
 					maxmin: true,
-					content: url + '/' + $(obj).parents("tr").attr("data-tt-id")
-// 					area: [w, h]
+					content: url + '/' + $(obj).parents("tr").attr("data-tt-id"),
+					area: [w, h]
 				});
-				layer.full(index);
 			}
-			/*角色-删除*/
-			function role_del(obj) {
+			/*员工-删除*/
+			function user_del(obj) {
 				layer.confirm('确认要删除吗？', function(index) {
 					$.ajax({
 			            type: "POST",
